@@ -16,11 +16,11 @@ body:
       label: 作者或来源
     validations:
       required: true
-  - type: input
+  - type: textarea
     id: url
     attributes:
       label: 资源链接
-      description: 填写公开可访问的 HTTPS 链接
+      description: 填写公开可访问的 HTTPS 链接，或拖入文件上传，保留自动生成的链接。MP3、WAV、PDF 等通常限 25 MB。
     validations:
       required: true
   - type: textarea

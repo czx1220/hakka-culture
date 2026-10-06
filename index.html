@@ -23,7 +23,7 @@
         ><a href="#studio">AI 共创</a><a href="#community">资源共享</a
         ><a href="#craft">文创好物</a>
       </nav>
-      <a class="nav-cta" href="#studio">开始创作 <span>↗</span></a>
+      <a class="nav-cta" href="#community">浏览资源 <span>↗</span></a>
     </header>
     <main>
       <section id="home" class="hero">
@@ -35,7 +35,7 @@
             一曲山歌，越过山海。<br />在这里，听见客家文化的回响，<br />也让你的灵感，成为下一段乡音。
           </p>
           <div class="actions">
-            <a class="button" href="#music">探索客家音乐 <span>↗</span></a
+            <a class="button" href="#community">探索共享资源 <span>↗</span></a
             ><a class="text-link" href="#performances"
               ><span class="play-small">▶</span> 看一场公益展演</a
             >
@@ -77,6 +77,60 @@
           <p>原音片段，唤醒创作灵感</p>
         </div>
         <small>平台愿景与规模据参考材料展示，非本 demo 实际资源量</small>
+      </section>
+      <section id="community" class="section resource-section">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">OPEN CULTURE LIBRARY</div>
+            <h2>好资源，让灵感<span>流动。</span></h2>
+          </div>
+          <button class="button" id="submit-resource">＋ 分享资源</button>
+        </div>
+        <p class="resource-intro">
+          分享音乐、乐谱、影像与文化故事，一起建立属于大家的客家资源库。
+        </p>
+        <div class="library-banner">
+          <span>开放共享 · 尊重原创</span>
+          <p>
+            通过 GitHub 投稿，审核后公开展示。支持公开链接或 GitHub 附件投稿。
+          </p>
+        </div>
+        <div class="library-toolbar">
+          <div
+            class="filters"
+            id="resource-filters"
+            role="group"
+            aria-label="资源分类"
+          >
+            <button class="selected" data-category="全部">全部</button
+            ><button data-category="音乐">音乐</button
+            ><button data-category="乐谱">乐谱</button
+            ><button data-category="影像">影像</button
+            ><button data-category="文献">文献</button
+            ><button data-category="素材">素材</button>
+          </div>
+          <label class="search"
+            ><span>⌕</span
+            ><input
+              id="resource-search"
+              type="search"
+              placeholder="搜索资源、作者或关键词"
+              aria-label="搜索资源"
+          /></label>
+        </div>
+        <div class="library-summary">
+          <span id="resource-count"></span
+          ><label
+            ><input id="favorites-only" type="checkbox" /> 只看我的收藏</label
+          ><button id="refresh-resources" class="text-link">刷新资源 ↻</button>
+        </div>
+        <p id="resource-status" role="status"></p>
+        <div id="resource-grid" class="resource-grid"></div>
+        <p id="resource-empty" hidden>没有找到资源，试试其他分类或关键词。</p>
+        <div class="contribution-note">
+          <strong>从一个人的收藏，到所有人的灵感。</strong
+          ><span>① 填写资料　② GitHub 提交　③ 审核上架</span>
+        </div>
       </section>
       <section id="performances" class="section">
         <div class="section-heading">
@@ -174,7 +228,7 @@
         </div>
         <form id="compose-form" class="compose-card">
           <div class="card-top">
-            <span>✦ AI 作曲工作台</span><small>CREATIVE STUDIO</small>
+            <span>✦ 客家山歌编曲 · 待接入</span><small>CREATIVE STUDIO</small>
           </div>
           <div class="compose-modes" role="group" aria-label="生成方式">
             <button type="button" class="selected" data-mode="demo">
@@ -254,60 +308,6 @@
             </button>
           </div>
         </form>
-      </section>
-      <section id="community" class="section resource-section">
-        <div class="section-heading">
-          <div>
-            <div class="eyebrow">04 / OPEN CULTURE LIBRARY</div>
-            <h2>好资源，让灵感<span>流动。</span></h2>
-          </div>
-          <button class="button" id="submit-resource">＋ 分享资源</button>
-        </div>
-        <p class="resource-intro">
-          分享音乐、乐谱、影像与文化故事，一起建立属于大家的客家资源库。
-        </p>
-        <div class="library-banner">
-          <span>开放共享 · 尊重原创</span>
-          <p>
-            通过 GitHub 投稿，审核后公开展示。资源文件使用你提供的公开链接。
-          </p>
-        </div>
-        <div class="library-toolbar">
-          <div
-            class="filters"
-            id="resource-filters"
-            role="group"
-            aria-label="资源分类"
-          >
-            <button class="selected" data-category="全部">全部</button
-            ><button data-category="音乐">音乐</button
-            ><button data-category="乐谱">乐谱</button
-            ><button data-category="影像">影像</button
-            ><button data-category="文献">文献</button
-            ><button data-category="素材">素材</button>
-          </div>
-          <label class="search"
-            ><span>⌕</span
-            ><input
-              id="resource-search"
-              type="search"
-              placeholder="搜索资源、作者或关键词"
-              aria-label="搜索资源"
-          /></label>
-        </div>
-        <div class="library-summary">
-          <span id="resource-count"></span
-          ><label
-            ><input id="favorites-only" type="checkbox" /> 只看我的收藏</label
-          ><button id="refresh-resources" class="text-link">刷新资源 ↻</button>
-        </div>
-        <p id="resource-status" role="status"></p>
-        <div id="resource-grid" class="resource-grid"></div>
-        <p id="resource-empty" hidden>没有找到资源，试试其他分类或关键词。</p>
-        <div class="contribution-note">
-          <strong>从一个人的收藏，到所有人的灵感。</strong
-          ><span>① 填写资料　② GitHub 提交　③ 审核上架</span>
-        </div>
       </section>
       <section id="craft" class="craft">
         <div>

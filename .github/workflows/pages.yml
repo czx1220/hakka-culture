@@ -2,9 +2,12 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: [main]
+  issues:
+    types: [opened, edited, closed, reopened, labeled, unlabeled, deleted]
   workflow_dispatch:
 permissions:
   contents: read
+  issues: read
   pages: write
   id-token: write
 concurrency:
@@ -19,6 +22,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Export approved resources
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/export-resources.mjs
       - name: Prepare website
         run: |
           mkdir _site

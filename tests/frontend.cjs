@@ -36,7 +36,7 @@ const root = path.resolve(__dirname, "..");
         number: 42,
         title: maliciousTitle,
         user: { login: "guest" },
-        body: "### 资源分类\n音乐\n\n### 作者或来源\nGuest\n\n### 资源链接\nhttps://example.com/song.wav\n\n### 资源介绍\nShared song\n\n### 使用许可\nCC0",
+        body: "### 资源分类\n音乐\n\n### 作者或来源\nGuest\n\n### 资源链接\n[山歌.wav](https://example.com/song.wav)\n\n### 资源介绍\nShared song\n\n### 使用许可\nCC0",
       },
       {
         number: 43,
@@ -66,6 +66,7 @@ const root = path.resolve(__dirname, "..");
     d.querySelector("#dialog-content a").href,
     "https://example.com/song.wav",
   );
+  assert(d.querySelector("#dialog-content audio"));
   d.querySelector(".close").click();
   d.querySelector("#resource-search").value = "找不到";
   d.querySelector("#resource-search").dispatchEvent(new w.Event("input"));
@@ -87,6 +88,9 @@ const root = path.resolve(__dirname, "..");
   assert(
     new URL(opened).searchParams.get("body").includes("### 资源分类\n音乐"),
   );
+  f.elements.url.value = "";
+  f.dispatchEvent(new w.Event("submit", { cancelable: true }));
+  assert(new URL(opened).searchParams.get("body").includes("请将文件拖入这里"));
   d.querySelector(".close").click();
   d.querySelector('[data-mode="ai"]').click();
   assert.equal(d.querySelector("#generate-button").disabled, true);
