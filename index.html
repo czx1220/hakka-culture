@@ -170,11 +170,46 @@
           <div class="studio-tags">
             <span>五声音阶</span><span>跨风格融合</span><span>人人可创作</span>
           </div>
-          <small>✳ AI 共创概念体验 · 当前为本地规则编曲演示</small>
+          <small>✳ 选择灵感、风格与乐器，生成属于你的音乐。</small>
         </div>
         <form id="compose-form" class="compose-card">
           <div class="card-top">
-            <span>✦ 灵感工作台</span><small>CREATIVE STUDIO</small>
+            <span>✦ AI 作曲工作台</span><small>CREATIVE STUDIO</small>
+          </div>
+          <div class="compose-modes" role="group" aria-label="生成方式">
+            <button type="button" class="selected" data-mode="demo">
+              旋律演示</button
+            ><button type="button" data-mode="ai">AI 作曲</button>
+          </div>
+          <p id="mode-description" class="mode-description">
+            本地规则合成，可立即试听；不调用 AI 模型。
+          </p>
+          <div id="ai-access" hidden>
+            <label for="access-code">创作邀请码</label
+            ><input
+              id="access-code"
+              type="password"
+              autocomplete="off"
+              placeholder="服务开通后由管理员提供"
+            />
+          </div>
+          <div class="prompt-presets">
+            <button
+              type="button"
+              data-prompt="清晨山间的客家五声音阶，竹笛与古筝，温暖轻快，无人声"
+            >
+              山间晨曲</button
+            ><button
+              type="button"
+              data-prompt="雨落土楼的安静夜晚，温柔钢琴与环境氛围，舒缓，无人声"
+            >
+              土楼听雨</button
+            ><button
+              type="button"
+              data-prompt="客家山歌旋律意象与现代电子节拍融合，明快，有律动，无人声"
+            >
+              乡音新编
+            </button>
           </div>
           <label for="prompt">你想听见怎样的乡音？</label
           ><textarea
@@ -184,6 +219,13 @@
             placeholder="例如：清晨的山间，一段轻快的客家旋律，搭配温暖的钢琴声…"
           >
 清晨的山间，一段轻快又温暖的乡音</textarea>
+          <label class="instrument-label"
+            >主要乐器<select id="instrument">
+              <option value="piano">钢琴</option>
+              <option value="flute">竹笛</option>
+              <option value="pluck">弹拨弦乐</option>
+            </select></label
+          >
           <div class="form-row">
             <label
               >音乐风格<select id="mood">
@@ -199,51 +241,72 @@
               </select></label
             >
           </div>
-          <button class="button" type="submit">
+          <button class="button" id="generate-button" type="submit">
             ✦ 生成我的旋律 <span>→</span>
           </button>
+          <p id="generation-status" role="status" aria-live="polite"></p>
           <div id="compose-result" hidden>
             <p role="status">你的灵感旋律已生成</p>
             <audio controls id="generated-audio"></audio
-            ><a id="download" download="hakka-demo.wav">下载旋律 ↓</a>
+            ><a id="download" download="hakka-demo.wav">下载旋律 ↓</a
+            ><button type="button" class="text-link" id="share-composition">
+              将作品投稿到资源库 ↗
+            </button>
           </div>
         </form>
       </section>
-      <section id="community" class="section community">
-        <div>
-          <div class="eyebrow">04 / MADE BY US, SHARED WITH ALL</div>
-          <h2>每个人，都是<br />文化的<span>共创者。</span></h2>
-          <p>
-            分享一份灵感，收藏一段故事。<br />让客家文化，在一次次交流中生长。
-          </p>
-          <button class="button" data-detail="share">分享我的灵感 ↗</button>
+      <section id="community" class="section resource-section">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">04 / OPEN CULTURE LIBRARY</div>
+            <h2>好资源，让灵感<span>流动。</span></h2>
+          </div>
+          <button class="button" id="submit-resource">＋ 分享资源</button>
         </div>
-        <div class="community-board">
-          <span class="board-label">共创灵感墙 / DEMO</span>
-          <article>
-            <span>声</span>
-            <div>
-              <small>音乐创作 · 灵感示例</small>
-              <h3>把童年的摇篮曲，唱给今天的自己</h3>
-              <p>传统童谣 × 轻柔钢琴</p>
-            </div>
-          </article>
-          <article>
-            <span>乡</span>
-            <div>
-              <small>文化故事 · 灵感示例</small>
-              <h3>土楼里的四季，是一首缓慢的诗</h3>
-              <p>生活采风 × 声音记录</p>
-            </div>
-          </article>
-          <article>
-            <span>新</span>
-            <div>
-              <small>跨界共创 · 灵感示例</small>
-              <h3>当山歌遇见城市的节拍</h3>
-              <p>客家旋律 × 现代编曲</p>
-            </div>
-          </article>
+        <p class="resource-intro">
+          分享音乐、乐谱、影像与文化故事，一起建立属于大家的客家资源库。
+        </p>
+        <div class="library-banner">
+          <span>开放共享 · 尊重原创</span>
+          <p>
+            通过 GitHub 投稿，审核后公开展示。资源文件使用你提供的公开链接。
+          </p>
+        </div>
+        <div class="library-toolbar">
+          <div
+            class="filters"
+            id="resource-filters"
+            role="group"
+            aria-label="资源分类"
+          >
+            <button class="selected" data-category="全部">全部</button
+            ><button data-category="音乐">音乐</button
+            ><button data-category="乐谱">乐谱</button
+            ><button data-category="影像">影像</button
+            ><button data-category="文献">文献</button
+            ><button data-category="素材">素材</button>
+          </div>
+          <label class="search"
+            ><span>⌕</span
+            ><input
+              id="resource-search"
+              type="search"
+              placeholder="搜索资源、作者或关键词"
+              aria-label="搜索资源"
+          /></label>
+        </div>
+        <div class="library-summary">
+          <span id="resource-count"></span
+          ><label
+            ><input id="favorites-only" type="checkbox" /> 只看我的收藏</label
+          ><button id="refresh-resources" class="text-link">刷新资源 ↻</button>
+        </div>
+        <p id="resource-status" role="status"></p>
+        <div id="resource-grid" class="resource-grid"></div>
+        <p id="resource-empty" hidden>没有找到资源，试试其他分类或关键词。</p>
+        <div class="contribution-note">
+          <strong>从一个人的收藏，到所有人的灵感。</strong
+          ><span>① 填写资料　② GitHub 提交　③ 审核上架</span>
         </div>
       </section>
       <section id="craft" class="craft">
@@ -278,6 +341,9 @@
       <div id="dialog-content"></div>
     </dialog>
     <div id="toast" role="status"></div>
+    <script src="config.js"></script>
     <script src="app.js"></script>
+    <script src="resources.js"></script>
+    <script src="composer.js"></script>
   </body>
 </html>

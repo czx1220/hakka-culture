@@ -1,0 +1,15 @@
+{
+  "name": "hakka-culture",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/music-server.test.mjs && node tests/frontend.cjs",
+    "start:api": "node --env-file=server/.env server/music-server.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "jsdom": "30.1.2"
+  }
+}

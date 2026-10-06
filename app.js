@@ -25,7 +25,7 @@ function stopAudio() {
     currentUrl = null;
   }
 }
-function makeWav(seed, duration, mood = "gentle") {
+function makeWav(seed, duration, mood = "gentle", instrument = "piano") {
   const rate = 22050,
     length = rate * duration,
     buffer = new ArrayBuffer(44 + length * 2),
@@ -56,10 +56,14 @@ function makeWav(seed, duration, mood = "gentle") {
         (mood === "deep" ? 0.5 : 1);
     const envelope =
       Math.min(x / 0.015, 1) *
-      Math.exp(-x * 5) *
+      Math.exp(
+        -x * (instrument === "flute" ? 2 : instrument === "pluck" ? 9 : 5),
+      ) *
       Math.min((duration - t) / 0.15, 1);
     const sample =
-      (Math.sin(2 * Math.PI * f * x) + 0.25 * Math.sin(4 * Math.PI * f * x)) *
+      (Math.sin(2 * Math.PI * f * x) +
+        (instrument === "flute" ? 0.08 : instrument === "pluck" ? 0.5 : 0.25) *
+          Math.sin(4 * Math.PI * f * x)) *
       0.24 *
       envelope;
     view.setInt16(
@@ -123,25 +127,6 @@ document.querySelectorAll("[data-filter]").forEach(
 );
 document.querySelector("#search").oninput = render;
 render();
-document.querySelector("#compose-form").onsubmit = (e) => {
-  e.preventDefault();
-  stopAudio();
-  const prompt = document.querySelector("#prompt").value.trim();
-  if (!prompt) return;
-  let seed = 0;
-  for (const char of prompt) seed = (seed + char.codePointAt(0)) % 997;
-  const blob = makeWav(
-    seed,
-    Number(document.querySelector("#duration").value),
-    document.querySelector("#mood").value,
-  );
-  if (generatedUrl) URL.revokeObjectURL(generatedUrl);
-  generatedUrl = URL.createObjectURL(blob);
-  document.querySelector("#generated-audio").src = generatedUrl;
-  document.querySelector("#download").href = generatedUrl;
-  document.querySelector("#compose-result").hidden = false;
-};
-document.querySelector("#generated-audio").onplay = stopAudio;
 const details = {
   performance: [
     "南客之音 · 山海共鸣",
